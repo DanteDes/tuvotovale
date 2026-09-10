@@ -1,26 +1,155 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-oswald);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --gold: #FFD700;
+  --gold-dark: #c9a800;
+  --navy: #0a1628;
+  --navy-light: #112244;
+  --led-red: #FF2D00;
+  --led-glow: rgba(255, 45, 0, 0.4);
+  --neon-blue: #00e5ff;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: #050b18;
+  color: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ── Stadium background ── */
+.stadium-bg {
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 10%, rgba(20, 50, 120, 0.5) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 10%, rgba(20, 50, 120, 0.5) 0%, transparent 70%),
+    radial-gradient(ellipse 100% 60% at 50% 0%, rgba(15, 35, 90, 0.8) 0%, transparent 60%),
+    linear-gradient(180deg, #0d1f42 0%, #060e20 50%, #030810 100%);
+  position: relative;
+}
+
+.stadium-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(255, 220, 100, 0.08) 0%, transparent 35%),
+    radial-gradient(circle at 85% 20%, rgba(255, 220, 100, 0.08) 0%, transparent 35%);
+  pointer-events: none;
+}
+
+/* ── LED scoreboard ── */
+.led-number {
+  font-family: var(--font-display), 'Oswald', sans-serif;
+  font-weight: 700;
+  color: var(--led-red);
+  text-shadow:
+    0 0 8px var(--led-glow),
+    0 0 20px var(--led-glow),
+    0 0 40px rgba(255, 45, 0, 0.2);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+}
+
+.scoreboard-panel {
+  background: #080c14;
+  border: 2px solid var(--neon-blue);
+  box-shadow:
+    0 0 12px rgba(0, 229, 255, 0.3),
+    0 0 30px rgba(0, 229, 255, 0.1),
+    inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Gold button ── */
+.btn-gold {
+  background: linear-gradient(135deg, #FFD700 0%, #e6b800 100%);
+  color: #0a0f1e;
+  font-family: var(--font-display), 'Oswald', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(255, 215, 0, 0.5);
+}
+
+.btn-gold:active {
+  transform: translateY(0);
+}
+
+/* ── Outlined button ── */
+.btn-outline {
+  background: transparent;
+  color: #ffffff;
+  font-family: var(--font-display), 'Oswald', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 2px solid #ffffff;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* ── Progress bar ── */
+.vote-progress-bar {
+  background: #1a2a4a;
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.vote-progress-fill {
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(90deg, #FFD700, #e6b800);
+  border-radius: 999px;
+}
+
+/* ── Leader title ── */
+.leader-title {
+  font-family: var(--font-display), 'Oswald', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+/* ── Ranking row ── */
+.ranking-row {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: background 0.15s ease;
+}
+
+.ranking-row:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ── Number counter animation ── */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.count-animate {
+  animation: countUp 0.4s ease forwards;
+}
+
+/* ── Confetti canvas ── */
+.confetti-canvas {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  width: 100%;
+  height: 100%;
 }
