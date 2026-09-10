@@ -15,9 +15,9 @@ export default function Scoreboard({ teams }: ScoreboardProps) {
   return (
     <div className="scoreboard-panel rounded-xl p-4 w-56 shrink-0">
       {/* Header */}
-      <div className="text-center mb-4 border-b border-[#00e5ff33] pb-3">
+      <div className="text-center mb-4 border-b border-white/10 pb-3">
         <p
-          className="text-[11px] tracking-[0.25em] text-[#00e5ff] uppercase font-semibold"
+          className="text-[11px] tracking-[0.25em] text-gray-400 uppercase font-semibold"
           style={{ fontFamily: 'var(--font-oswald), Oswald, sans-serif' }}
         >
           VOTOS ACTUALES

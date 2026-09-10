@@ -3,8 +3,15 @@ import VotingSection from '@/components/voting/VotingSection'
 import RankingList from '@/components/voting/RankingList'
 import type { Team } from '@/types'
 
-// Mock data — reemplazar con fetch a Supabase cuando esté configurado
-const MOCK_TEAMS: Team[] = [
+// Clásico featured en la home: Boca vs River (superclásico)
+// TODO: reemplazar con fetch a Supabase
+const SUPERCLASICO: Team[] = [
+  { id: '1', name: 'Boca Juniors', slug: 'boca', logo_url: null, votes_count: 421900, created_at: '' },
+  { id: '2', name: 'River Plate', slug: 'river', logo_url: null, votes_count: 9321, created_at: '' },
+]
+
+// Ranking general — todos los clubes
+const ALL_TEAMS: Team[] = [
   { id: '1', name: 'Boca Juniors', slug: 'boca', logo_url: null, votes_count: 421900, created_at: '' },
   { id: '2', name: 'River Plate', slug: 'river', logo_url: null, votes_count: 9321, created_at: '' },
   { id: '3', name: 'Racing Club', slug: 'racing', logo_url: null, votes_count: 7200, created_at: '' },
@@ -13,15 +20,13 @@ const MOCK_TEAMS: Team[] = [
 ]
 
 export default async function HomePage() {
-  // TODO: const teams = await supabase.from('teams').select('*').order('votes_count', { ascending: false })
-  const teams = MOCK_TEAMS
-  const totalVotes = teams.reduce((sum, t) => sum + t.votes_count, 0)
+  const totalVotes = ALL_TEAMS.reduce((sum, t) => sum + t.votes_count, 0)
 
   return (
     <main className="flex flex-col min-h-screen">
       <Navbar />
-      <VotingSection initialTeams={teams} />
-      <RankingList teams={teams} totalVotes={totalVotes} />
+      <VotingSection initialTeams={SUPERCLASICO} />
+      <RankingList teams={ALL_TEAMS} totalVotes={totalVotes} />
     </main>
   )
 }

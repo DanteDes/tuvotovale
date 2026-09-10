@@ -25,9 +25,6 @@ export default function Navbar() {
           >
             VALE
           </span>
-          <span className="text-[10px] text-gray-400 tracking-[0.3em] uppercase">
-            Rey de la Cancha
-          </span>
         </Link>
 
         {/* Nav links */}

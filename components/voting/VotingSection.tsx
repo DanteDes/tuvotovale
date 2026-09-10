@@ -2,10 +2,11 @@
 
 import { useEffect, useRef, useState } from 'react'
 import type { Team } from '@/types'
-import { Confetti, type ConfettiRef } from '@/components/ui/confetti'
+import { Confetti, type ConfettiRef, getTeamColors } from '@/components/ui/confetti'
 import TeamCard from './TeamCard'
 import ProgressBar from './ProgressBar'
 import Scoreboard from './Scoreboard'
+import HinchadaAudio from './HinchadaAudio'
 
 interface VotingSectionProps {
   initialTeams: Team[]
@@ -34,17 +35,18 @@ export default function VotingSection({ initialTeams }: VotingSectionProps) {
   function handleVote(team: Team) {
     // TODO: redirect to MercadoPago preference
     alert(`Próximamente: pago de $1.000 ARS para votar por ${team.name}`)
-    confettiRef.current?.fire()
+    confettiRef.current?.fire({ colors: getTeamColors(team.slug) })
     setHasVoted(true)
   }
 
   return (
     <section className="stadium-bg relative flex-1">
       <Confetti ref={confettiRef} />
+      {leader && <HinchadaAudio leaderSlug={leader.slug} />}
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 pt-12 pb-16">
+      <div className="relative z-10 flex flex-col items-center px-4 pt-12 pb-16">
         {/* Leader headline */}
-        <div className="text-center mb-10">
+        <div className="text-center mb-10 w-full max-w-4xl">
           <h1
             className="leader-title text-5xl md:text-7xl text-white drop-shadow-lg"
           >
@@ -62,14 +64,14 @@ export default function VotingSection({ initialTeams }: VotingSectionProps) {
         </div>
 
         {/* Main voting area + scoreboard */}
-        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center gap-8">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-8 w-full max-w-4xl">
 
           {/* Voting battle */}
           <div className="flex-1 flex flex-col items-center gap-6 max-w-2xl w-full">
             {/* Two team cards + progress bar */}
             <div className="w-full bg-[#0a1628cc] backdrop-blur-sm rounded-2xl p-6 border border-[#1a3060]">
               <div className="flex items-center justify-between gap-4">
-                <TeamCard team={top1} onVote={handleVote} side="left" disabled={hasVoted} />
+                <TeamCard team={top1} onVote={handleVote} disabled={hasVoted} />
 
                 <div className="flex-1 flex flex-col items-center gap-3">
                   {/* VS badge */}
@@ -89,7 +91,7 @@ export default function VotingSection({ initialTeams }: VotingSectionProps) {
                   />
                 </div>
 
-                <TeamCard team={top2} onVote={handleVote} side="right" disabled={hasVoted} />
+                <TeamCard team={top2} onVote={handleVote} disabled={hasVoted} />
               </div>
 
               {hasVoted && (

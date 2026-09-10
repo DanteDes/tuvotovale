@@ -46,21 +46,16 @@ body {
 .led-number {
   font-family: var(--font-display), 'Oswald', sans-serif;
   font-weight: 700;
-  color: var(--led-red);
-  text-shadow:
-    0 0 8px var(--led-glow),
-    0 0 20px var(--led-glow),
-    0 0 40px rgba(255, 45, 0, 0.2);
+  color: #ffffff;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.05em;
 }
 
 .scoreboard-panel {
   background: #080c14;
-  border: 2px solid var(--neon-blue);
+  border: 2px solid rgba(255, 215, 0, 0.4);
   box-shadow:
-    0 0 12px rgba(0, 229, 255, 0.3),
-    0 0 30px rgba(0, 229, 255, 0.1),
+    0 0 12px rgba(255, 215, 0, 0.15),
     inset 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
