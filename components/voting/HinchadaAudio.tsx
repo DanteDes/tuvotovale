@@ -1,49 +1,89 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 interface HinchadaAudioProps {
-  leaderSlug: string
+  slug: string
 }
 
 const HINCHADA_SOUNDS: Record<string, string> = {
-  boca: '/sounds/hinchada-boca.mp3',
+  boca:  '/sounds/hinchada-boca.mp3',
   river: '/sounds/hinchada-river.mp3',
 }
 
-export default function HinchadaAudio({ leaderSlug }: HinchadaAudioProps) {
-  const audioRef = useRef<HTMLAudioElement | null>(null)
-  const played = useRef(false)
+const BUTTON_STYLES: Record<string, { bg: string; text: string; border: string }> = {
+  boca:  { bg: '#003f8a', text: '#FFD700', border: '#FFD700' },
+  river: { bg: '#CC0000', text: '#ffffff', border: '#CC0000' },
+}
+const DEFAULT_BTN = { bg: '#FFD700', text: '#0a0f1e', border: '#FFD700' }
 
+export default function HinchadaAudio({ slug }: HinchadaAudioProps) {
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const [unlocked, setUnlocked] = useState(false)
+  const [muted, setMuted] = useState(false)
+
+  // Cargar/cambiar audio cuando cambia el slug
   useEffect(() => {
-    const src = HINCHADA_SOUNDS[leaderSlug]
+    const src = HINCHADA_SOUNDS[slug]
     if (!src) return
 
+    audioRef.current?.pause()
     const audio = new Audio(src)
     audio.volume = 0.4
-    audio.loop = false
     audioRef.current = audio
 
-    // Browsers block autoplay — we hook into first user interaction
-    function tryPlay() {
-      if (played.current) return
-      played.current = true
-      audio.play().catch(() => {
-        // blocked silently — no crash
-      })
-      window.removeEventListener('click', tryPlay)
-      window.removeEventListener('touchstart', tryPlay)
+    if (unlocked && !muted) audio.play().catch(() => {})
+
+    return () => { audio.pause() }
+  }, [slug]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Cualquier click en la página desbloquea el audio
+  useEffect(() => {
+    if (unlocked) return
+    function unlock() {
+      setUnlocked(true)
+      audioRef.current?.play().catch(() => {})
     }
-
-    window.addEventListener('click', tryPlay, { once: true })
-    window.addEventListener('touchstart', tryPlay, { once: true })
-
+    window.addEventListener('click', unlock, { once: true })
+    window.addEventListener('touchstart', unlock, { once: true })
     return () => {
-      window.removeEventListener('click', tryPlay)
-      window.removeEventListener('touchstart', tryPlay)
-      audio.pause()
+      window.removeEventListener('click', unlock)
+      window.removeEventListener('touchstart', unlock)
     }
-  }, [leaderSlug])
+  }, [unlocked])
 
-  return null
+  // Mute / unmute
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio || !unlocked) return
+    muted ? audio.pause() : audio.play().catch(() => {})
+  }, [muted, unlocked])
+
+  function handleMuteToggle(e: React.MouseEvent) {
+    e.stopPropagation() // no dispara el unlock global dos veces
+    if (!unlocked) {
+      setUnlocked(true)
+      audioRef.current?.play().catch(() => {})
+      return
+    }
+    setMuted(prev => !prev)
+  }
+
+  const s = BUTTON_STYLES[slug] ?? DEFAULT_BTN
+  const label = !unlocked ? '▶  Escuchar hinchada' : muted ? '🔇  Sin sonido' : '🔊  Con sonido'
+
+  return (
+    <button
+      onClick={handleMuteToggle}
+      className="mt-4 px-5 py-2 rounded-full text-sm font-bold uppercase tracking-widest border-2 transition-all duration-150 hover:scale-105 cursor-pointer"
+      style={{
+        backgroundColor: s.bg,
+        color: s.text,
+        borderColor: s.border,
+        fontFamily: 'var(--font-oswald), Oswald, sans-serif',
+      }}
+    >
+      {label}
+    </button>
+  )
 }

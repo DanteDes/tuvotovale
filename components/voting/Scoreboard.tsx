@@ -5,6 +5,16 @@ interface ScoreboardProps {
   teams: Team[]
 }
 
+const LOGO_STYLES: Record<string, { bg: string; text: string; border: string }> = {
+  boca:  { bg: '#003f8a', text: '#FFD700', border: '#FFD700' },
+  river: { bg: '#CC0000', text: '#ffffff', border: '#CC0000' },
+}
+const DEFAULT_LOGO = { bg: '#1a2a4a', text: '#FFD700', border: '#2a3a6a' }
+
+function getLogoStyle(slug: string) {
+  return LOGO_STYLES[slug] ?? DEFAULT_LOGO
+}
+
 function formatVotes(n: number): string {
   return n.toLocaleString('es-AR')
 }
@@ -13,7 +23,7 @@ export default function Scoreboard({ teams }: ScoreboardProps) {
   const top = teams.slice(0, 4)
 
   return (
-    <div className="scoreboard-panel rounded-xl p-4 w-56 shrink-0">
+    <div className="scoreboard-panel rounded-xl p-4 w-56 h-full flex flex-col">
       {/* Header */}
       <div className="text-center mb-4 border-b border-white/10 pb-3">
         <p
@@ -30,15 +40,23 @@ export default function Scoreboard({ teams }: ScoreboardProps) {
           <div key={team.id} className="flex flex-col gap-1">
             {/* Team identity */}
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-full bg-[#1a2a4a] border border-[#2a3a6a] flex items-center justify-center overflow-hidden shrink-0">
-                {team.logo_url ? (
-                  <Image src={team.logo_url} alt={team.name} width={28} height={28} className="object-contain" />
-                ) : (
-                  <span className="text-[10px] font-bold text-[#FFD700]">
-                    {team.name.slice(0, 2).toUpperCase()}
-                  </span>
-                )}
-              </div>
+              {(() => {
+                const s = getLogoStyle(team.slug)
+                return (
+                  <div
+                    className="w-7 h-7 rounded-full flex items-center justify-center overflow-hidden shrink-0 border"
+                    style={{ backgroundColor: s.bg, borderColor: s.border }}
+                  >
+                    {team.logo_url ? (
+                      <Image src={team.logo_url} alt={team.name} width={28} height={28} className="object-contain" />
+                    ) : (
+                      <span className="text-[10px] font-bold" style={{ color: s.text }}>
+                        {team.name.slice(0, 2).toUpperCase()}
+                      </span>
+                    )}
+                  </div>
+                )
+              })()}
               <span
                 className="text-xs text-gray-300 uppercase tracking-wide truncate"
                 style={{ fontFamily: 'var(--font-oswald), Oswald, sans-serif' }}
