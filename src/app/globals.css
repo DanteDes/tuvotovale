@@ -6,11 +6,11 @@
 }
 
 :root {
-  --gold: #FFD700;
+  --gold: #ffd700;
   --gold-dark: #c9a800;
   --navy: #0a1628;
   --navy-light: #112244;
-  --led-red: #FF2D00;
+  --led-red: #ff2d00;
   --led-glow: rgba(255, 45, 0, 0.4);
   --neon-blue: #00e5ff;
 }
@@ -33,7 +33,7 @@ body {
 }
 
 .stadium-bg::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background-image:
@@ -44,7 +44,7 @@ body {
 
 /* ── LED scoreboard ── */
 .led-number {
-  font-family: var(--font-display), 'Oswald', sans-serif;
+  font-family: var(--font-display), "Oswald", sans-serif;
   font-weight: 700;
   color: #ffffff;
   font-variant-numeric: tabular-nums;
@@ -61,13 +61,15 @@ body {
 
 /* ── Gold button ── */
 .btn-gold {
-  background: linear-gradient(135deg, #FFD700 0%, #e6b800 100%);
+  background: linear-gradient(135deg, #ffd700 0%, #e6b800 100%);
   color: #0a0f1e;
-  font-family: var(--font-display), 'Oswald', sans-serif;
+  font-family: var(--font-display), "Oswald", sans-serif;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
   box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
 }
 
@@ -84,12 +86,14 @@ body {
 .btn-outline {
   background: transparent;
   color: #ffffff;
-  font-family: var(--font-display), 'Oswald', sans-serif;
+  font-family: var(--font-display), "Oswald", sans-serif;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   border: 2px solid #ffffff;
-  transition: transform 0.15s ease, background 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease;
 }
 
 .btn-outline:hover {
@@ -107,13 +111,13 @@ body {
 
 .vote-progress-fill {
   transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  background: linear-gradient(90deg, #FFD700, #e6b800);
+  background: linear-gradient(90deg, #ffd700, #e6b800);
   border-radius: 999px;
 }
 
 /* ── Leader title ── */
 .leader-title {
-  font-family: var(--font-display), 'Oswald', sans-serif;
+  font-family: var(--font-display), "Oswald", sans-serif;
   font-weight: 700;
   text-transform: uppercase;
   line-height: 1.1;
@@ -131,8 +135,14 @@ body {
 
 /* ── Number counter animation ── */
 @keyframes countUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .count-animate {

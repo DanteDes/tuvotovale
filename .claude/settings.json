@@ -9,9 +9,7 @@
     "CLAUDE_AUTO_BACKGROUND_TASKS": "true"
   },
   "permissions": {
-    "deny": [
-      "Read(./**/*.local.md)"
-    ],
+    "deny": ["Read(./**/*.local.md)"],
     "allow": [
       "Bash(npm run build*)",
       "Bash(npm run test*)",
