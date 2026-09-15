@@ -91,4 +91,3 @@ The `docs/` folder contains architecture decisions and design notes that explain
 | `docs/system-architecture.md` | Two planes, tech stack, app layout, data model, integrations |
 | `docs/code-standards.md` | TypeScript, React, component, and project-structure conventions |
 | `docs/adr/0001-user-facing-error-messages.md` | When to throw `AppError` vs a plain `Error`, and why messages are masked by default |
-| `docs/adr/0002-offer-delete-cascade-orphans-candidate-files.md` | Why deleting an offer cascades candidates in the DB but leaves their bucket files orphaned, and where a future fix would hook in |
