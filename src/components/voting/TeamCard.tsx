@@ -77,6 +77,7 @@ export default function TeamCard({ team, onVote, disabled }: TeamCardProps) {
 
       {/* Vote button */}
       <button
+        type="button"
         onClick={() => onVote(team)}
         disabled={disabled}
         className="cursor-pointer rounded border-2 px-6 py-3 font-bold text-sm uppercase tracking-widest transition-all duration-150 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50"

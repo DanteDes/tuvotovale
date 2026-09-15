@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { OperationFailedError } from "@/lib/errors";
+
 interface HinchadaAudioProps {
   slug: string;
 }
@@ -16,6 +18,19 @@ const BUTTON_STYLES: Record<string, { bg: string; text: string; border: string }
   river: { bg: "#CC0000", text: "#ffffff", border: "#CC0000" },
 };
 const DEFAULT_BTN = { bg: "#FFD700", text: "#0a0f1e", border: "#FFD700" };
+
+/**
+ * The browser's autoplay policy rejects `play()` with a `NotAllowedError` until the user has
+ * interacted with the page. That is this component's normal path, not a failure — `unlocked`
+ * exists to model it. Anything else is a genuine playback fault and is surfaced rather than
+ * swallowed.
+ */
+function playHinchada(audio: HTMLAudioElement) {
+  audio.play().catch((cause: unknown) => {
+    if (cause instanceof DOMException && cause.name === "NotAllowedError") return;
+    throw new OperationFailedError("No se pudo reproducir el audio de la hinchada.");
+  });
+}
 
 export default function HinchadaAudio({ slug }: HinchadaAudioProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -32,7 +47,7 @@ export default function HinchadaAudio({ slug }: HinchadaAudioProps) {
     audio.volume = 0.4;
     audioRef.current = audio;
 
-    if (unlocked && !muted) audio.play().catch(() => {});
+    if (unlocked && !muted) playHinchada(audio);
 
     return () => {
       audio.pause();
@@ -44,7 +59,7 @@ export default function HinchadaAudio({ slug }: HinchadaAudioProps) {
     if (unlocked) return;
     function unlock() {
       setUnlocked(true);
-      audioRef.current?.play().catch(() => {});
+      if (audioRef.current) playHinchada(audioRef.current);
     }
     window.addEventListener("click", unlock, { once: true });
     window.addEventListener("touchstart", unlock, { once: true });
@@ -58,14 +73,18 @@ export default function HinchadaAudio({ slug }: HinchadaAudioProps) {
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio || !unlocked) return;
-    muted ? audio.pause() : audio.play().catch(() => {});
+    if (muted) {
+      audio.pause();
+    } else {
+      playHinchada(audio);
+    }
   }, [muted, unlocked]);
 
   function handleMuteToggle(e: React.MouseEvent) {
     e.stopPropagation(); // no dispara el unlock global dos veces
     if (!unlocked) {
       setUnlocked(true);
-      audioRef.current?.play().catch(() => {});
+      if (audioRef.current) playHinchada(audioRef.current);
       return;
     }
     setMuted((prev) => !prev);
@@ -76,6 +95,7 @@ export default function HinchadaAudio({ slug }: HinchadaAudioProps) {
 
   return (
     <button
+      type="button"
       onClick={handleMuteToggle}
       className="mt-4 cursor-pointer rounded-full border-2 px-5 py-2 font-bold text-sm uppercase tracking-widest transition-all duration-150 hover:scale-105"
       style={{
