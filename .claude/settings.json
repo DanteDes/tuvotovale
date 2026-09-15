@@ -1,0 +1,34 @@
+{
+  "includeCoAuthoredBy": false,
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": true
+  },
+  "env": {
+    "CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS": "20",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet",
+    "CLAUDE_AUTO_BACKGROUND_TASKS": "true"
+  },
+  "permissions": {
+    "deny": [
+      "Read(./**/*.local.md)"
+    ],
+    "allow": [
+      "Bash(npm run build*)",
+      "Bash(npm run test*)",
+      "Bash(npm run format*)",
+      "Bash(npx tsc *)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(git show:*)",
+      "Read(./**/local.settings.json)",
+      "Read(./**/*.tsx)",
+      "Read(./**/*.ts)",
+      "Read(./**/*.mjs)",
+      "Read(./**/*.js)",
+      "Read(./**/*.md)",
+      "Read(./**/*.json)"
+    ]
+  }
+}

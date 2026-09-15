@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TuVotoVale
 
-## Getting Started
+Online platform where sports fans vote for their favorite team. Votes are cast after a MercadoPago payment, which discourages fake/automated voting. Teams rotate weekly.
 
-First, run the development server:
+## Stack
+
+- Next.js 16 (App Router)
+- React 19
+- TypeScript
+- PostgreSQL
+- Drizzle ORM
+- Better Auth
+- next-safe-action
+- Tailwind CSS + shadcn UI
+- Biome
+
+## Getting started
 
 ```bash
+npm install
+cp .env.example .env   # fill in the required values
+npm run prepare        # sets up git hooks (needed once, since .npmrc has ignore-scripts=true)
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the dev server |
+| `npm run build` | Production build |
+| `npm start` | Run the production build |
+| `npm run lint` | Check code with Biome |
+| `npm run format` | Auto-format code with Biome |
 
-## Learn More
+## Conventions
 
-To learn more about Next.js, take a look at the following resources:
+- Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/) and are enforced by a `commit-msg` git hook (commitlint).
+- Formatting/linting is handled entirely by Biome — no ESLint or Prettier.
+- Project structure, coding conventions, and architecture decisions live in `docs/`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Working with Claude Code
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project uses [Claude Code](https://claude.com/claude-code) with the [Superpowers](https://github.com/obra/superpowers) plugin for skills-driven workflows (brainstorming, TDD, code review, etc.). Install it before starting agent-assisted work here:
 
-## Deploy on Vercel
+```bash
+claude plugin marketplace add anthropics/claude-plugins-official
+claude plugin install superpowers@claude-plugins-official
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Project-specific skills and agent instructions live under `.claude/`.
