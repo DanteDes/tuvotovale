@@ -137,6 +137,10 @@ Exports `ENV_CONFIG` as a typed object with `DATABASE_URL`, `BETTER_AUTH_SECRET`
 relative import (`./src/config/env`) instead: drizzle-kit compiles the config outside the Next
 toolchain and does not read `tsconfig.json` path mappings, so the alias fails to resolve there.
 
+The same limitation applies to everything drizzle-kit loads. `src/lib/db/schema/index.ts` therefore
+re-exports its siblings relatively (`./auth`, `./teams`) rather than through `@/`. This is the one
+place in the codebase where a relative import is correct, and it is not a deep one.
+
 `.env.example` is corrected — `DATABASE_URL` currently has no trailing `=` — and gains a sample
 Postgres connection string.
 
@@ -227,10 +231,9 @@ At the repository root, with `dialect: "postgresql"`, `schema: "./src/lib/db/sch
 
 New `package.json` scripts: `db:generate`, `db:migrate` and `db:studio`.
 
-**Empirical check for the implementer:** drizzle-kit may not load `.env` on its own. If
-`db:generate` reports a missing `DATABASE_URL`, prefix the scripts with Node's
-`--env-file=.env` (Node here is v24, so the flag is available) rather than adding a `dotenv`
-dependency. Record whichever turns out to be true in `docs/code-standards.md`.
+drizzle-kit loads `.env` on its own — it bundles `dotenv` and imports `dotenv/config` in its bin
+before evaluating the config file — so the scripts need no `--env-file` flag and the project needs
+no `dotenv` dependency.
 
 ## Verification
 
