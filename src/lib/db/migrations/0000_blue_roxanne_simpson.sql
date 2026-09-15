@@ -6,10 +6,10 @@ CREATE TABLE "accounts" (
 	"access_token" text,
 	"refresh_token" text,
 	"id_token" text,
-	"scope" text,
-	"password" text,
 	"access_token_expires_at" timestamp with time zone,
 	"refresh_token_expires_at" timestamp with time zone,
+	"scope" text,
+	"password" text,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"updated_at" timestamp with time zone DEFAULT now() NOT NULL
 );
