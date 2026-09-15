@@ -14,8 +14,8 @@ description: Use when writing or updating anything under docs/ — an architectu
 | `docs/system-architecture.md` | Static structure: planes, stack, layout, data model, integrations | edit in place |
 | `docs/code-standards.md` | Project-wide TypeScript/tooling/language conventions | edit in place |
 | `docs/adr/NNNN-<slug>.md` | A decision with a live alternative that was rejected | sequential number + kebab slug |
-| `docs/specs/YYYY-MM-DD-<slug>-design.md` | Design specs (written in the main session during brainstorming) | dated |
-| `docs/plans/YYYY-MM-DD-<slug>.md` | Implementation plans (written in the main session) | dated |
+| `docs/superpowers/specs/YYYY-MM-DD-<slug>-design.md` | Design specs (written in the main session during brainstorming) | dated |
+| `docs/superpowers/plans/YYYY-MM-DD-<slug>.md` | Implementation plans (written in the main session) | dated |
 | `.claude/skills/<name>/SKILL.md` | A repeatable *how-to* an agent needs while working | — |
 
 The last row is the most-missed routing rule. **If the knowledge tells someone how to do a recurring task, it is a skill, not a doc.** `docs/` is for decisions and structure; skills are for procedure. Writing a how-to into `docs/` buries it where no agent will load it.

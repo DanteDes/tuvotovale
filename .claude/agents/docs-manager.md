@@ -83,7 +83,7 @@ Always report what you **chose not to write** and why. That judgement is most of
 
 ### I Delegate
 
-- Writing specs and plans → the main session, with the user (`docs/specs/`, `docs/plans/`)
+- Writing specs and plans → the main session, with the user (`docs/superpowers/specs/`, `docs/superpowers/plans/`)
 - Authoring a skill's procedural content → the agent that owns that domain
 - Filing a ticket for work a doc surfaced → **project-manager**
 - Any code change → **nextjs-developer**
