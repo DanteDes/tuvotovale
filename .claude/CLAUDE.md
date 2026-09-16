@@ -88,6 +88,12 @@ The `docs/` folder contains architecture decisions and design notes that explain
 
 | File | Topic |
 | --- | --- |
+| `docs/prd.md` | Product requirements: Arena, paid voting, clásicos, seasons, ranking, MVP scope and what is explicitly out |
+| `docs/uses-cases/README.md` | Index of the use cases (UC-01…UC-58), grouped into Visitor, Payments, Ranking & seasons, Admin — each UC in its own file |
 | `docs/system-architecture.md` | Two planes, tech stack, app layout, data model, integrations |
 | `docs/code-standards.md` | TypeScript, React, component, and project-structure conventions |
 | `docs/adr/0001-user-facing-error-messages.md` | When to throw `AppError` vs a plain `Error`, and why messages are masked by default |
+
+Before implementing a feature or fixing a bug in product behavior, read he matching 
+use case under `docs/uses-cases/` — they define expected behavior, edge cases, and 
+acceptance criteria. If the code and the use case disagree, raise it instead of guessing.
