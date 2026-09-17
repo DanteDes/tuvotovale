@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es" className={`${oswald.variable} h-full`}>
-      <body className="flex min-h-full flex-col bg-[#050b18] text-white antialiased">{children}</body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
